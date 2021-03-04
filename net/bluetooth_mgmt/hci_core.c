@@ -61,8 +61,6 @@ static void hci_tx_task(unsigned long arg);
 
 static DEFINE_RWLOCK(hci_task_lock);
 
-extern void hci_uart_tty_read_hook(struct sk_buff *skb);
-
 /* HCI device list */
 LIST_HEAD(hci_dev_list);
 DEFINE_RWLOCK(hci_dev_list_lock);
@@ -1962,6 +1960,32 @@ int hci_resume_dev(struct hci_dev *hdev)
 }
 EXPORT_SYMBOL(hci_resume_dev);
 
+void hci_uart_tty_read_hook(struct sk_buff *skb)
+{
+	if (!hook) {
+		BT_DBG("%s: hooking wasn't requested, skip it", __func__);
+		goto hci_uart_tty_read_hook_exit;
+	}
+
+	if (bt_cb(skb)->pkt_type != HCI_EVENT_PKT) {
+		BT_DBG("%s: Packet type is %d, skip it",
+				__func__, bt_cb(skb)->pkt_type);
+		goto hci_uart_tty_read_hook_exit;
+	}
+
+	BT_DBG("%s: Received len = %d", __func__, skb->len);
+	if (skb->len > sizeof(hook->data)) {
+		BT_DBG("Packet size exceeds max len, skip it");
+		goto hci_uart_tty_read_hook_exit;
+	}
+
+	memcpy(hook->data, &bt_cb(skb)->pkt_type, 1);
+	skb_copy_from_linear_data(skb, &hook->data[1], skb->len);
+	hook->len = skb->len + 1;
+
+hci_uart_tty_read_hook_exit:
+	wake_up_interruptible(&read_wait);
+}
 
 /* Receive frame from HCI drivers */
 int hci_recv_frame(struct sk_buff *skb)
