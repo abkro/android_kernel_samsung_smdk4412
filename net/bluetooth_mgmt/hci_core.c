@@ -61,6 +61,8 @@ static void hci_tx_task(unsigned long arg);
 
 static DEFINE_RWLOCK(hci_task_lock);
 
+extern void hci_uart_tty_read_hook(struct sk_buff *skb);
+
 /* HCI device list */
 LIST_HEAD(hci_dev_list);
 DEFINE_RWLOCK(hci_dev_list_lock);
@@ -1960,7 +1962,6 @@ int hci_resume_dev(struct hci_dev *hdev)
 }
 EXPORT_SYMBOL(hci_resume_dev);
 
-extern void hci_uart_tty_read_hook(struct sk_buff *skb);
 
 /* Receive frame from HCI drivers */
 int hci_recv_frame(struct sk_buff *skb)
