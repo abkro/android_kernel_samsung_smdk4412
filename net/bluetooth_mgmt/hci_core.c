@@ -1960,6 +1960,14 @@ int hci_resume_dev(struct hci_dev *hdev)
 }
 EXPORT_SYMBOL(hci_resume_dev);
 
+struct hci_uart_hook {
+	unsigned int len;
+	unsigned char *head;
+	unsigned char data[HCI_MAX_EVENT_SIZE];
+};
+
+static struct hci_uart_hook *hook;
+
 void hci_uart_tty_read_hook(struct sk_buff *skb)
 {
 	if (!hook) {
