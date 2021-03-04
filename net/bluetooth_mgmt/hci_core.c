@@ -1968,6 +1968,8 @@ struct hci_uart_hook {
 
 static struct hci_uart_hook *hook;
 
+static DECLARE_WAIT_QUEUE_HEAD(read_wait);
+
 void hci_uart_tty_read_hook(struct sk_buff *skb)
 {
 	if (!hook) {
