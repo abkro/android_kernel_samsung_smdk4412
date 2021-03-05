@@ -717,9 +717,9 @@ CONFIG_ARM_FLUSH_CONSOLE_ON_RESTART=y
 # CONFIG_USE_OF is not set
 CONFIG_ZBOOT_ROM_TEXT=0
 CONFIG_ZBOOT_ROM_BSS=0
-CONFIG_CMDLINE=" console=tty0 androidboot.hardware=smdk4x12 loglevel=4 bootmode=2 sec_debug.level=0 sec_watchdog.sec_pet=5 androidboot.debug_level=0x4f4c sec_log=0x100000@0x46000000 s3cfb.bootloaderfb=0x5ec00000 sysscope=0xee000000 lcdtype=96 consoleblank=0 lpcharge=0 lpj=3981312 vmalloc=144m oops=panic pmic_info=33 cordon=c7a2da9483c96ea39d9f94f788bf52cd connie=GT-I9300_OPEN_EUR_8fd5f37fb3cc3200dd90dd4ed4bee16a androidboot.emmc_checksum=3 androidboot.odin_download=1 androidboot.bootloader=I9300XXUGND5 androidboot.serialno=4df147066ed34f4b snd_soc_core.pmdown_time=1000"
+CONFIG_CMDLINE="console=tty0 androidboot.hardware=smdk4x12"
 # CONFIG_CMDLINE="console=ttySAC2,115200 consoleblank=0 androidboot.hardware=smdk4x12"
-CONFIG_CMDLINE_FROM_BOOTLOADER=n
+# CONFIG_CMDLINE_FROM_BOOTLOADER is not set
 CONFIG_CMDLINE_EXTEND=y
 # CONFIG_CMDLINE_FORCE is not set
 # CONFIG_XIP_KERNEL is not set
